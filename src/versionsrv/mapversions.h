@@ -3,6 +3,13 @@
 #ifndef VERSIONSRV_MAPVERSIONS_H
 #define VERSIONSRV_MAPVERSIONS_H
 
+struct CMapVersion
+{
+	char m_aName[8];
+	unsigned char m_aCrc[4];
+	unsigned char m_aSize[4];
+};
+
 static CMapVersion s_aMapVersionList[] = {
 	{"ctf1", {0x06, 0xb5, 0xf1, 0x17}, {0x00, 0x00, 0x12, 0x38}},
 	{"ctf2", {0x27, 0xbc, 0x5e, 0xac}, {0x00, 0x00, 0x64, 0x1a}},
