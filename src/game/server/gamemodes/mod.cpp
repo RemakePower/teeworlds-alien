@@ -155,14 +155,14 @@ void CGameControllerMOD::ShowHighScore()
 			if(m_HighScoreHuman)
 			{
 				if(strlen(m_HighScoreClanHuman))
-					str_format(m_GenBuf, sizeof(m_GenBuf),"Highscore tees: %d - %s | %s",m_HighScoreHuman,m_HighScoreNameHuman,m_HighScoreClanHuman);
+					str_format(m_GenBuf, sizeof(m_GenBuf),"高分tee: %d - %s | %s",m_HighScoreHuman,m_HighScoreNameHuman,m_HighScoreClanHuman);
 				else
-					str_format(m_GenBuf, sizeof(m_GenBuf),"Highscore tees: %d - %s",m_HighScoreHuman,m_HighScoreNameHuman);
+					str_format(m_GenBuf, sizeof(m_GenBuf),"高分tee: %d - %s",m_HighScoreHuman,m_HighScoreNameHuman);
         			
 				GameServer()->SendBroadcast(m_GenBuf,-1);
 			}			
 			else
-        			GameServer()->SendBroadcast("No hi-score for survivors yet!",-1);
+        			GameServer()->SendBroadcast("暂时没有高分的幸存者!",-1);
 
 			m_ShowHighScoreTick = Server()->Tick() + 2 * Server()->TickSpeed();
 			m_ShowHighScore++;
@@ -172,14 +172,14 @@ void CGameControllerMOD::ShowHighScore()
 			if(m_HighScoreMutant)
 			{
 				if(strlen(m_HighScoreClanMutant))
-					str_format(m_GenBuf, sizeof(m_GenBuf),"Scariest mutant: %d - %s | %s",m_HighScoreMutant,m_HighScoreNameMutant,m_HighScoreClanMutant);
+					str_format(m_GenBuf, sizeof(m_GenBuf),"最可怕的突变体: %d - %s | %s",m_HighScoreMutant,m_HighScoreNameMutant,m_HighScoreClanMutant);
 				else
-					str_format(m_GenBuf, sizeof(m_GenBuf),"Scariest mutant: %d - %s",m_HighScoreMutant,m_HighScoreNameMutant);
+					str_format(m_GenBuf, sizeof(m_GenBuf),"最可怕的突变体: %d - %s",m_HighScoreMutant,m_HighScoreNameMutant);
         			
 				GameServer()->SendBroadcast(m_GenBuf,-1);
 			}
 			else
-        			GameServer()->SendBroadcast("No hi-score for mutants yet!",-1);
+        			GameServer()->SendBroadcast("暂时没有高分的突变体!",-1);
 
 			m_ShowHighScore = 0;
 		}
@@ -248,7 +248,7 @@ void CGameControllerMOD::PreStartGame()
         	m_GamePreStarting = 1;
 		m_GamePreStartingDelay = 0;
 	
-		GameServer()->SendChatTarget(-1, "Alica-AI: Possible intrusion. Starting scan...");
+		GameServer()->SendChatTarget(-1, "Alica-AI: 可能的入侵. 开始扫描...");
 		m_ShowHighScoreTick = Server()->Tick() + 5 * Server()->TickSpeed();
 		m_ShowHighScore = 1;
 	}
@@ -280,18 +280,18 @@ void CGameControllerMOD::StartGame(int PlayerCount)
 				pChr = GameServer()->m_apPlayers[i]->GetCharacter();
 				if(pChr)
 				{
-					GameServer()->SendBroadcast("You are starting this round as Mutant!", GameServer()->m_apPlayers[i]->GetCID());
+					GameServer()->SendBroadcast("你这回合是突变体!", GameServer()->m_apPlayers[i]->GetCID());
 					GameServer()->m_apPlayers[i]->m_ScienceCount = 0;
 					pChr->Mutate();
 					GameServer()->CreateSound(pChr->m_Pos,SOUND_PLAYER_SKID);
 				
 					if(g_Config.m_SvInitAirStrike && rand()%2 == 1)	
 					{
-						GameServer()->SendChatTarget(-1, "Alica-AI: WARNING: Alien mutagen detected! Starting countermeasures.");
+						GameServer()->SendChatTarget(-1, "Alica-AI: 警告: 检测到外星人突变剂! 开始使用对策.");
 						DoAirstrike(-1);
 					}
 					else
-						GameServer()->SendChatTarget(-1, "Alica-AI: WARNING: Alien mutagen detected! Countermeasures not available.");
+						GameServer()->SendChatTarget(-1, "Alica-AI: 警告: 检测到外星人突变剂! 对策不可用.");
 						
 				
 					m_GameRunning = 1;
@@ -374,7 +374,7 @@ void CGameControllerMOD::DoWincheck()
 		m_GameRunning = 0;
 		m_GamePreStarting = 0;
 		m_GamePreStartingDelay = 0;
-		GameServer()->SendBroadcast("Brave tees survived alien invasion!", -1);
+		GameServer()->SendBroadcast("Tee在外星人的入侵下生存了下来!", -1);
 	}
 
 	if(m_GameRunning == 0 && m_ActivePlayers > 1)
@@ -406,7 +406,7 @@ void CGameControllerMOD::DoWincheck()
 				m_GameRunning = 0;
 				m_GamePreStarting = 0;
 				m_GamePreStartingDelay = 0;
-				GameServer()->SendBroadcast("Mutants took over the world!", -1);
+				GameServer()->SendBroadcast("突变体占领了世界!", -1);
 			}
 			else if(m_ActiveHumans == m_ActivePlayers)
 			{	
@@ -423,7 +423,7 @@ void CGameControllerMOD::DoWincheck()
 				m_GameRunning = 0;
 				m_GamePreStarting = 0;
 				m_GamePreStartingDelay = 0;
-				GameServer()->SendBroadcast("Brave tees survived alien invasion!", -1);
+				GameServer()->SendBroadcast("Tee在外星人的入侵下生存了下来!", -1);
 				m_BroadcastTick = Server()->Tick() + 5000 * Server()->TickSpeed() / 1000;
 			}
 		}
@@ -437,7 +437,7 @@ void CGameControllerMOD::DoWincheck()
 			m_FlipIdleBroadcast = 1 - m_FlipIdleBroadcast; 
 			m_BroadcastTick = Server()->Tick() + 4 * Server()->TickSpeed();
 			if(m_FlipIdleBroadcast == 1)
-				GameServer()->SendBroadcast("2 players required. Please wait!", -1);
+				GameServer()->SendBroadcast("至少需要2名玩家，请等等!", -1);
 			else
 				m_ShowHighScore = 1;
 		}
@@ -461,7 +461,7 @@ void CGameControllerMOD::UpdateHiScore()
 			strcpy(m_HighScoreNameHuman,Server()->ClientName(GameServer()->m_apPlayers[i]->GetCID()));	
 			strcpy(m_HighScoreClanHuman,Server()->ClientClan(GameServer()->m_apPlayers[i]->GetCID()));
 			char aBuf[512];
-			str_format(aBuf, sizeof(aBuf), "%s set new hi-score for brave survivors!",m_HighScoreNameHuman);
+			str_format(aBuf, sizeof(aBuf), "%s 打破了人类最高分记录!",m_HighScoreNameHuman);
 			GameServer()->SendChatTarget(-1,aBuf);
 		}	
 
@@ -472,7 +472,7 @@ void CGameControllerMOD::UpdateHiScore()
 			strcpy(m_HighScoreNameMutant,Server()->ClientName(GameServer()->m_apPlayers[i]->GetCID()));	
 			strcpy(m_HighScoreClanMutant,Server()->ClientClan(GameServer()->m_apPlayers[i]->GetCID()));
 			char bBuf[512];
-			str_format(bBuf, sizeof(bBuf), "%s set new hi-score for most scary mutant!",m_HighScoreNameMutant);
+			str_format(bBuf, sizeof(bBuf), "%s 打破了可怕的突变体的最高分记录!",m_HighScoreNameMutant);
 			GameServer()->SendChatTarget(-1,bBuf);
 		}	
 	}

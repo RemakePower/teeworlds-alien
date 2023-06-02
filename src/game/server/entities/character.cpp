@@ -426,12 +426,12 @@ void CCharacter::AirStrike()
 {
 	if(!m_OwnAirstrike)
 	{
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(),"No airstrike available.");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(),"空袭不可用");
 		return;
 	}
 	else if(m_pPlayer->m_MutatorTeam <= TEAM_MUTANT)
 	{
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Mutants don't need airstrikes.");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(),"突变体不需要空袭");
 		return;
 	}
 	
@@ -1042,9 +1042,9 @@ void CCharacter::Tick()
 			if(!m_PrevOnReapinator && Server()->Tick() - m_ShowInfoTick > 0)
 			{
 				if(GameServer()->m_pController->ReapinatorOnline())
-					GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Reapinator: Prototype restriction: Mutant required.");
+					GameServer()->SendChatTarget(m_pPlayer->GetCID(),"收割者: 原型限制: 需要突变体.");
 				else
-					GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Reapinator: Warmup in progress. Please come again later.");
+					GameServer()->SendChatTarget(m_pPlayer->GetCID(),"收割者: 游戏处于热身. 请过会再访问.");
 				m_ShowInfoTick = Server()->Tick() + 2 * Server()->TickSpeed();
 			}
 		}
@@ -1057,9 +1057,9 @@ void CCharacter::Tick()
 				{
 					if(m_LaserWall)
 					{
-						GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Deactivating laserwall for fillup.");
+						GameServer()->SendChatTarget(m_pPlayer->GetCID(),"取消激光墙以修复");
 						DestroyLaserWall();
-                                                GameServer()->CreateSound(m_Pos, SOUND_RIFLE_BOUNCE);
+                        GameServer()->CreateSound(m_Pos, SOUND_RIFLE_BOUNCE);
 					}
 
 					m_EnergyUpTick = Server()->Tick() + 200 * Server()->TickSpeed() / 1000;
@@ -1078,7 +1078,7 @@ void CCharacter::Tick()
 				else if(!m_PrevOnEnergyUp)
 				{
 					m_EnergyUpTick = Server()->Tick() + 4 * Server()->TickSpeed();
-					GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Generator is down!");
+					GameServer()->SendChatTarget(m_pPlayer->GetCID(),"发电机已关闭!");
 				}	
 			}
 		}
@@ -1104,13 +1104,13 @@ void CCharacter::Tick()
 					if(m_pPlayer->m_Score >= g_Config.m_SvReapinatorMinScore)
 					{
 						char aBuf[512];
-						str_format(aBuf,sizeof(aBuf),"Alica-KI: WARNING: %s metamorphosed and became an alien-reaper!",Server()->ClientName(m_pPlayer->GetCID()));
+						str_format(aBuf,sizeof(aBuf),"Alica-KI: 警告: %s 突变了并成为了死神!",Server()->ClientName(m_pPlayer->GetCID()));
 						GameServer()->SendChatTarget(-1,aBuf);
 						BecameReaper();
 					}
 					else if(!m_PrevOnReapinator && Server()->Tick() - m_ShowInfoTick > 0)
 					{
-						GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Reapinator: Too less score for metamorphose. Please come again later.");
+						GameServer()->SendChatTarget(m_pPlayer->GetCID(),"收割者: 突变分数过低. 请过会再访问.");
 						m_ShowInfoTick = Server()->Tick() + 2 * Server()->TickSpeed();	
 					}	
 				}
@@ -1132,7 +1132,7 @@ void CCharacter::Tick()
 			}
 			else if(!m_PrevOnReapinator && Server()->Tick() - m_ShowInfoTick > 0)
 			{
-				GameServer()->SendChatTarget(m_pPlayer->GetCID(),"Reapinator: Warmup in progress. Please come again later.");
+				GameServer()->SendChatTarget(m_pPlayer->GetCID(),"收割者: 正在热身. 请稍后访问.");
 				m_ShowInfoTick = Server()->Tick() + 2 * Server()->TickSpeed();	
 			}
 		}
@@ -1372,7 +1372,7 @@ void CCharacter::Die(int Killer, int Weapon)
 	if(m_pPlayer->m_MutatorTeam >= TEAM_HUMAN)
         {
 		if(GameServer()->m_pController->MutGameRunning())
-			GameServer()->SendBroadcast("You are now a Mutant!", m_pPlayer->GetCID());
+			GameServer()->SendBroadcast("你现在是突变体!", m_pPlayer->GetCID());
 
 		if(Killer != m_pPlayer->GetCID() && Killer >= 0)	
 		{
@@ -1459,9 +1459,9 @@ void CCharacter::Die(int Killer, int Weapon)
 						pHeroChar = GameServer()->m_apPlayers[Killer]->GetCharacter();
 						if(pHeroChar)
 						{
-							GameServer()->SendBroadcast("You became a hero", GameServer()->m_apPlayers[Killer]->GetCID());
+							GameServer()->SendBroadcast("你成为了英雄", GameServer()->m_apPlayers[Killer]->GetCID());
 							char bBuf[512];
-							str_format(bBuf,sizeof(bBuf),"%s becames a hero", 
+							str_format(bBuf,sizeof(bBuf),"%s成为了英雄", 
 									Server()->ClientName(GameServer()->m_apPlayers[Killer]->GetCID()));
         						GameServer()->SendChatTarget(-1, bBuf);
 							pHeroChar->BecameHero(1);
@@ -1871,38 +1871,38 @@ void CCharacter::Metamorphose()
 	{
 		case 0:
 			{
-				str_format(bBuf,sizeof(bBuf),"%s metamorphosed and gained starting-shields", Server()->ClientName(m_pPlayer->GetCID()));
-				str_format(aBuf,sizeof(aBuf),"You gained starting-shields");
+				str_format(bBuf,sizeof(bBuf),"%s 突变了并且得到了开局护盾", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你得到了开局护盾");
 			}
 			break;
 		case 1:
 			{
-				str_format(bBuf,sizeof(bBuf),"%s metamorphosed and gained biohazard-resistance", Server()->ClientName(m_pPlayer->GetCID()));
-				str_format(aBuf,sizeof(aBuf),"You gained biohazard-resistance");
+				str_format(bBuf,sizeof(bBuf),"%s 突变了并且免疫毒水", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你免疫了毒水");
 			}
 			break;
 		case 2:
 			{
-				str_format(bBuf,sizeof(bBuf),"%s metamorphosed and gained alien-multijump", Server()->ClientName(m_pPlayer->GetCID()));
-				str_format(aBuf,sizeof(aBuf),"You gained alien-multijump");
+				str_format(bBuf,sizeof(bBuf),"%s 突变了并得到了外星人多段跳", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你得到了外星人多段跳");
 			}
 			break;
 		case 3:
 			{
-				str_format(bBuf,sizeof(bBuf),"%s metamorphosed and gained alien-superhook", Server()->ClientName(m_pPlayer->GetCID()));
-				str_format(aBuf,sizeof(aBuf),"You gained alien-superhook");
+				str_format(bBuf,sizeof(bBuf),"%s 突变了并且得到了外星人超级钩", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你得到了外星人超级钩");
 			}
 			break;
 		case 4:
 			{
-				str_format(bBuf,sizeof(bBuf),"%s metamorphosed and gained alien-selfheal", Server()->ClientName(m_pPlayer->GetCID()));
-				str_format(aBuf,sizeof(aBuf),"You gained alien-selfheal");
+				str_format(bBuf,sizeof(bBuf),"%s 突变了并且能够自我治愈", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你能够自我治愈了");
 			}
 			break;
 		case 5:
 			{
-				str_format(bBuf,sizeof(bBuf),"Alica-KI: WARNING: %s metamorphosed and became an alien-reaper!", Server()->ClientName(m_pPlayer->GetCID()));
-				str_format(aBuf,sizeof(aBuf),"You are now a Reaper!");
+				str_format(bBuf,sizeof(bBuf),"Alica-KI: 警告: %s 突变并成为了死神!", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你现在是一个死神!");
 				BecameReaper();
 			}
 			break;
@@ -1944,7 +1944,7 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 	{
 		if(!AutoResearch)
 		{
-			str_format(aBuf,sizeof(aBuf),"Scientific research: Failed!");
+			str_format(aBuf,sizeof(aBuf),"科学研究: 失败!");
 			GameServer()->SendBroadcast(aBuf, m_pPlayer->GetCID());
 		}
 		return;
@@ -1960,13 +1960,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				GiveWeapon(WEAPON_RIFLE,10);
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Tele-Laserinator");
-					str_format(bBuf,sizeof(bBuf),"%s %s Tele-Laserinator", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了激光分析仪");
+					str_format(bBuf,sizeof(bBuf),"%s %s激光分析仪", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Tele-Laserinator: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: Tele-Laserinator", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"激光分析仪: 保存!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 激光分析仪", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -1980,13 +1980,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				GiveWeapon(WEAPON_RIFLE,g_Config.m_SvHealingAmmo,1);
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Healing-Laser");
-					str_format(bBuf,sizeof(bBuf),"%s %s Healing-Laser", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了治愈激光");
+					str_format(bBuf,sizeof(bBuf),"%s %s治愈激光", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Healing-Laser: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: Healing-Laser", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"治愈激光: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 治愈激光", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -1998,13 +1998,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				GiveWeapon(WEAPON_RIFLE,10);
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Riddle-Laser");
-					str_format(bBuf,sizeof(bBuf),"%s %s Riddle-Laser", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了谜语激光");
+					str_format(bBuf,sizeof(bBuf),"%s %s谜语激光", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Riddle-Laser: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: Riddle-Laser", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"谜语激光: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 谜语激光", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -2013,13 +2013,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				GiveWeapon(WEAPON_SHOTGUN,10);
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Shootgun MKII");
-					str_format(bBuf,sizeof(bBuf),"%s %s SG-MKII", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了霰弹-MKII");
+					str_format(bBuf,sizeof(bBuf),"%s %s霰弹-MKII", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Shootgun MKII: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: SG-MKII", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"霰弹MKII: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 霰弹-MKII", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -2027,13 +2027,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 			{ 
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained SG-Ammo MKII");
-					str_format(bBuf,sizeof(bBuf),"%s %s SG-Ammo MKII", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了霰弹-弹药 MKII");
+					str_format(bBuf,sizeof(bBuf),"%s %s霰弹-弹药 MKII", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"SG-Ammo MKII: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: SG-Ammo MKII", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"霰弹-弹药 MKII: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 霰弹-淡雅 MKII", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -2041,13 +2041,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 			{
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Cluster-Grenades");
-					str_format(bBuf,sizeof(bBuf),"%s %s Cluster-Grenades", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了集簇榴弹炮");
+					str_format(bBuf,sizeof(bBuf),"%s %s集簇榴弹炮", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Cluster-Grenades: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: Cluster-Grenades", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"集簇榴弹炮: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 集簇榴弹炮", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -2055,13 +2055,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 			{
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Gun-Ammo MKII");
-					str_format(bBuf,sizeof(bBuf),"%s %s Gun-Ammo MKII", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了手枪-弹药 MKII");
+					str_format(bBuf,sizeof(bBuf),"%s %s手枪-弹药 MKII", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Gun-Ammo MKII: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: Gun-Ammo MKII", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"手枪-弹药 MKII: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 手枪-弹药 MKII", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -2069,13 +2069,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 			{
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained SG-Speed-kit");
-					str_format(bBuf,sizeof(bBuf),"%s %s SG-Speed-kit", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了霰弹-速度-kit");
+					str_format(bBuf,sizeof(bBuf),"%s %s 霰弹-速度-kit", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"SG-Speed-kit: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: SG-Speed-kit", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"霰弹-速度-kit: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 霰弹-速度-kit", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
@@ -2083,27 +2083,27 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 			{
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"You gained Super-Battery");
-					str_format(bBuf,sizeof(bBuf),"%s %s Super-Battery", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了超级蓄电池");
+					str_format(bBuf,sizeof(bBuf),"%s %s超级蓄电池", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"Super-Battery: Saved!");
-					str_format(bBuf,sizeof(bBuf),"%s saved: Super-Battery", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"超级蓄电池: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 超级蓄电池", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
 		case 9:
 			{
-				str_format(aBuf,sizeof(aBuf),"You became a hero");
-				str_format(bBuf,sizeof(bBuf),"%s gained: Hero-genetics", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你成为了英雄");
+				str_format(bBuf,sizeof(bBuf),"%s 得到了: 英雄遗传", Server()->ClientName(m_pPlayer->GetCID()));
 				BecameHero(0);
 			}
 			break;
 		case 10:
 			{
-				str_format(aBuf,sizeof(aBuf),"You gained weapons refill.");
-				str_format(bBuf,sizeof(bBuf),"%s gained: Weapons refill", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你得到了武器装弹.");
+				str_format(bBuf,sizeof(bBuf),"%s 得到了: 武器装弹", Server()->ClientName(m_pPlayer->GetCID()));
 				GiveWeapon(WEAPON_GUN,10);
 				GiveWeapon(WEAPON_SHOTGUN,10);
 				GiveWeapon(WEAPON_GRENADE,10);
@@ -2119,8 +2119,8 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 			break;
 		case 11:
 			{
-				str_format(aBuf,sizeof(aBuf),"You gained shields fillup");
-				str_format(bBuf,sizeof(bBuf),"%s gained: Shield fillup", Server()->ClientName(m_pPlayer->GetCID()));
+				str_format(aBuf,sizeof(aBuf),"你得到了血盾恢复");
+				str_format(bBuf,sizeof(bBuf),"%s 得到了: 血盾恢复", Server()->ClientName(m_pPlayer->GetCID()));
 				IncreaseHealth(10);
 				IncreaseArmor(10);
 			}
@@ -2132,7 +2132,7 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				else
 					str_format(bBuf,sizeof(bBuf),"%s %s", Server()->ClientName(m_pPlayer->GetCID()), g_Config.m_SvInfoGotAirstrike);
 
-				str_format(aBuf,sizeof(aBuf),"You got an airstrike. (use /airstrike)");
+				str_format(aBuf,sizeof(aBuf),"你得到了空袭. (使用 /airstrike)");
 				m_OwnAirstrike++;
 			}
 			break;
@@ -2201,7 +2201,7 @@ bool CCharacter::BreakCircuit()
 	{
 		GameServer()->m_pController->MutSetPowerSupply(0);
 		char aBuf[512];
-		str_format(aBuf,sizeof(aBuf),"\nAlica-AI: WARNING! Generator destroyed by %s!\n",Server()->ClientName(m_pPlayer->GetCID()));
+		str_format(aBuf,sizeof(aBuf),"\nAlica-AI: 警告! 发电机被%s摧毁了!\n",Server()->ClientName(m_pPlayer->GetCID()));
 		GameServer()->SendChatTarget(-1, aBuf);
 		m_pPlayer->m_Score += 3;
 		SetEmote(EMOTE_FLASHING, Server()->Tick() + 2000 * Server()->TickSpeed() / 1000);

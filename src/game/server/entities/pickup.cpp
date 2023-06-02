@@ -92,16 +92,16 @@ void CPickup::Tick()
 								else if(Server()->Tick() - pChr->GetShowInfoTick() > 0)
 								{
 									pChr->SetShowInfoTick(Server()->Tick() + 2 * Server()->TickSpeed());
-									GameServer()->SendChatTarget(pChr->GetPlayer()->GetCID(),"Shields required for research!");
+									GameServer()->SendChatTarget(pChr->GetPlayer()->GetCID(),"需要护盾来研究!");
 								}
 							}
 							else if(Server()->Tick() - pChr->GetShowInfoTick() > 0)
 							{
 								pChr->SetShowInfoTick(Server()->Tick() + 2 * Server()->TickSpeed());
 								if(g_Config.m_SvScienceSuccessCount > 0)
-									GameServer()->SendChatTarget(pChr->GetPlayer()->GetCID(),"Research failed! Generator is down!");
+									GameServer()->SendChatTarget(pChr->GetPlayer()->GetCID(),"研究失败! 发电机已关闭!");
 								else
-									GameServer()->SendChatTarget(pChr->GetPlayer()->GetCID(),"Research failed! Station is disabled!");
+									GameServer()->SendChatTarget(pChr->GetPlayer()->GetCID(),"研究失败! 站台已关闭!");
 							}
 						}
 					}
