@@ -153,27 +153,28 @@ void CPlayer::Snap(int SnappingClient)
 			pClientInfo->m_ColorFeet = 25 * 0x100000 + 0xff00;*/
 			pClientInfo->m_ColorBody = 26279680;
 			pClientInfo->m_ColorFeet = 26279680;
-			StrToInts(&pClientInfo->m_Clan0, 3, "- Hero -");
+			StrToInts(&pClientInfo->m_Clan0, 3, "- 英雄 -");
 			break;
                 case TEAM_HUMAN:
 			/*pClientInfo->m_ColorBody = 25 * 0x100000 + 0xff72;
 			pClientInfo->m_ColorFeet = 25 * 0x100000 + 0xcc66;*/
 			pClientInfo->m_ColorBody = 26279794;
 			pClientInfo->m_ColorFeet = 26266726;
+			StrToInts(&pClientInfo->m_Clan0, 3, "- 人类 -");
 			break;
 		case TEAM_MUTANT:
 			/*pClientInfo->m_ColorBody = 128 * 0x100000 + 0xff72;
 			pClientInfo->m_ColorFeet = 128 * 0x100000 + 0xcc66;*/
 			pClientInfo->m_ColorBody = 134283122;
 			pClientInfo->m_ColorFeet = 134270054;
-			StrToInts(&pClientInfo->m_Clan0, 3, "- Mutant-");
+			StrToInts(&pClientInfo->m_Clan0, 3, "- 突变体-");
 			break;
 		case TEAM_REAPER:
 			/*pClientInfo->m_ColorBody = 128 * 0x100000 + 0xff11;
 			pClientInfo->m_ColorFeet = 128 * 0x100000 + 0xff11;*/
 			pClientInfo->m_ColorBody = 134283025;
 			pClientInfo->m_ColorFeet = 134283025;
-			StrToInts(&pClientInfo->m_Clan0, 3, "- Reaper -");
+			StrToInts(&pClientInfo->m_Clan0, 3, "- 死神 -");
 			break;
 	}
 

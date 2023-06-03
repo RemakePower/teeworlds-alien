@@ -1998,13 +1998,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				GiveWeapon(WEAPON_RIFLE,10);
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"你得到了谜语激光");
-					str_format(bBuf,sizeof(bBuf),"%s %s谜语激光", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了穿透激光");
+					str_format(bBuf,sizeof(bBuf),"%s %s穿透激光", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"谜语激光: 已拥有!");
-					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 谜语激光", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"穿透激光: 已拥有!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 穿透激光", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;

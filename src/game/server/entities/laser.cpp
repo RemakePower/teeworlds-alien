@@ -23,7 +23,7 @@ CLaser::CLaser(CGameWorld *pGameWorld, vec2 Pos, vec2 Direction, float StartEner
 // Mutator 
 const char *CLaser::m_SubDescription[] =
 {
-	"* 激光 *", "* 谜语激光 *", "* 激光分析仪 *", "* 治愈激光 *"
+	"* 激光 *", "* 穿透激光 *", "* 激光分析仪 *", "* 治愈激光 *"
 };
 
 bool CLaser::HitCharacter(vec2 From, vec2 To)
