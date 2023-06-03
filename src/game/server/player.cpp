@@ -167,7 +167,7 @@ void CPlayer::Snap(int SnappingClient)
 			pClientInfo->m_ColorFeet = 128 * 0x100000 + 0xcc66;*/
 			pClientInfo->m_ColorBody = 134283122;
 			pClientInfo->m_ColorFeet = 134270054;
-			StrToInts(&pClientInfo->m_Clan0, 3, "- 突变体-");
+			StrToInts(&pClientInfo->m_Clan0, 3, "- 突变体 -");
 			break;
 		case TEAM_REAPER:
 			/*pClientInfo->m_ColorBody = 128 * 0x100000 + 0xff11;

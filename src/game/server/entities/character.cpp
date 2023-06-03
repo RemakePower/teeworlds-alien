@@ -1960,13 +1960,13 @@ void CCharacter::ScienceResearch(bool AutoResearch)
 				GiveWeapon(WEAPON_RIFLE,10);
 				if(!remember_me)
 				{
-					str_format(aBuf,sizeof(aBuf),"你得到了激光分析仪");
-					str_format(bBuf,sizeof(bBuf),"%s %s激光分析仪", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
+					str_format(aBuf,sizeof(aBuf),"你得到了传送激光");
+					str_format(bBuf,sizeof(bBuf),"%s %s传送激光", Server()->ClientName(m_pPlayer->GetCID()), AutoResearch == 1 ? g_Config.m_SvInfoGot : g_Config.m_SvInfoResearched);
 				}
 				else
 				{
-					str_format(aBuf,sizeof(aBuf),"激光分析仪: 保存!");
-					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 激光分析仪", Server()->ClientName(m_pPlayer->GetCID()));
+					str_format(aBuf,sizeof(aBuf),"传送激光: 保存!");
+					str_format(bBuf,sizeof(bBuf),"%s 已拥有: 传送激光", Server()->ClientName(m_pPlayer->GetCID()));
 				}
 			}
 			break;
